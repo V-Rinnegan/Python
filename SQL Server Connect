@@ -1,0 +1,41 @@
+import pyodbc
+
+# Connection details
+DRIVER_NAME = ''
+SERVER_NAME = ''
+DATABASE_NAME = ''
+
+# Connection string
+connection_string = f"""
+    DRIVER={{{DRIVER_NAME}}};
+    SERVER={SERVER_NAME};
+    DATABASE={DATABASE_NAME};
+    Trust_Connection=yes;
+"""
+
+# Connect to the database
+conn = pyodbc.connect(connection_string)
+
+# Create a cursor
+cursor = conn.cursor()
+
+# Define the SQL SELECT statement
+sql_query = "Type sql query"  # Replace YourTableName with the actual table name
+
+try:
+    # Execute the SELECT statement
+    cursor.execute(sql_query)
+    
+    # Fetch the results
+    rows = cursor.fetchall()
+    
+    # Process the retrieved data
+    for row in rows:
+        print(row)  # You can process or display the data as needed
+        
+except Exception as e:
+    print("Error executing SQL query:", e)
+
+# Close the cursor and connection
+cursor.close()
+conn.close()
